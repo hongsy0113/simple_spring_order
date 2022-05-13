@@ -8,24 +8,32 @@ import hello.core.member.MemberServiceImpl;
 import hello.core.member.MemoryMemberRepository;
 import hello.core.order.OrderService;
 import hello.core.order.OrderServiceImpl;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
 
 
 // 이것만 봐도 역할들이 잘 드러난다.
 // 현재 app 설정에서는 구현을 뭘로 할거다~ 라는 것도 잘 드러난다.
+@Configuration
 public class AppConfig {
 
+    @Bean
     public MemberService memberService() {
         return new MemberServiceImpl(memberRepository());
     }
 
-    private MemoryMemberRepository memberRepository() {
+    @Bean
+    public MemoryMemberRepository memberRepository() {
         return new MemoryMemberRepository();
     }
 
+    @Bean
     public OrderService orderService() {
         return new OrderServiceImpl(memberRepository(), discountPolicy());
     }
 
+    @Bean
     public DiscountPolicy discountPolicy() {
         // return new FixDiscountPolicy();
         return new RateDiscountPolicy();
